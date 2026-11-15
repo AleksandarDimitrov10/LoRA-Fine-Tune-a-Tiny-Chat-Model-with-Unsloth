@@ -28,6 +28,10 @@ def load_base_model_and_tokenizer(model_name='unsloth/Qwen2.5-0.5B-Instruct-bnb-
 # TODO: solve this step to fill in count_total_parameters
 #       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0002)
 
+def count_total_parameters(model):
+      """Return the total number of parameters in `model` as a Python int."""
+      return int(sum(p.numel() for p in model.parameters))
+
 # ── Step 003  is_model_4bit_quantized ──
 # TODO: solve this step to fill in is_model_4bit_quantized
 #       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0003)
