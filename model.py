@@ -4,10 +4,8 @@ This updates live as you solve each step.
 """
 from unsloth import FastLanguageModel
 import numpy as np
+import bitsandbytes as bnb
 
-# ── Step 001  load_base_model_and_tokenizer ──
-# TODO: solve this step to fill in load_base_model_and_tokenizer
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0001)
 
 # ── Step 001  load_base_model_and_tokenizer ──
 def load_base_model_and_tokenizer(model_name='unsloth/Qwen2.5-0.5B-Instruct-bnb-4bit', max_seq_length=256):
@@ -24,17 +22,15 @@ def load_base_model_and_tokenizer(model_name='unsloth/Qwen2.5-0.5B-Instruct-bnb-
     )
     return model, tokenizer
 
-# ── Step 002  count_total_parameters ──
-# TODO: solve this step to fill in count_total_parameters
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0002)
 
 def count_total_parameters(model):
       """Return the total number of parameters in `model` as a Python int."""
       return int(sum(p.numel() for p in model.parameters))
 
-# ── Step 003  is_model_4bit_quantized ──
-# TODO: solve this step to fill in is_model_4bit_quantized
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0003)
+
+def is_model_4bit_quantized(model):
+    """Return True if any submodule of `model` is a bitsandbytes 4-bit linear layer."""
+    return any(isinstance(m, bnb.nn.Linear4bit) for m in model.modules())
 
 # ── Step 004  ensure_pad_token ──
 # TODO: solve this step to fill in ensure_pad_token
