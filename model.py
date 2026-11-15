@@ -1,0 +1,200 @@
+"""
+LoRA Fine-Tune a Tiny Chat Model with Unsloth — assembled scaffold.
+This updates live as you solve each step.
+"""
+from unsloth import FastLanguageModel
+import numpy as np
+
+# ── Step 001  load_base_model_and_tokenizer ──
+# TODO: solve this step to fill in load_base_model_and_tokenizer
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0001)
+
+# ── Step 001  load_base_model_and_tokenizer ──
+def load_base_model_and_tokenizer(model_name='unsloth/Qwen2.5-0.5B-Instruct-bnb-4bit', max_seq_length=256):
+    """Load a 4-bit quantized causal LM and its tokenizer via Unsloth.
+
+    Returns:
+        (model, tokenizer)
+    """
+    model, tokenizer = FastLanguageModel.from_pretrained(
+        model_name=model_name,
+        max_seq_length=max_seq_length,
+        dtype=None,          # auto-pick float16 / bfloat16 for the GPU
+        load_in_4bit=True,   # load 4-bit weights so the model fits on a small GPU
+    )
+    return model, tokenizer
+
+# ── Step 002  count_total_parameters ──
+# TODO: solve this step to fill in count_total_parameters
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0002)
+
+# ── Step 003  is_model_4bit_quantized ──
+# TODO: solve this step to fill in is_model_4bit_quantized
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0003)
+
+# ── Step 004  ensure_pad_token ──
+# TODO: solve this step to fill in ensure_pad_token
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0004)
+
+# ── Step 005  get_lora_target_modules ──
+# TODO: solve this step to fill in get_lora_target_modules
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0005)
+
+# ── Step 006  attach_lora_adapters ──
+# TODO: solve this step to fill in attach_lora_adapters
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0006)
+
+# ── Step 007  count_trainable_parameters ──
+# TODO: solve this step to fill in count_trainable_parameters
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0007)
+
+# ── Step 008  trainable_fraction ──
+# TODO: solve this step to fill in trainable_fraction
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0008)
+
+# ── Step 009  build_instruction_examples ──
+# TODO: solve this step to fill in build_instruction_examples
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0009)
+
+# ── Step 010  format_instruction_example ──
+# TODO: solve this step to fill in format_instruction_example
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0010)
+
+# ── Step 011  format_all_examples ──
+# TODO: solve this step to fill in format_all_examples
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0011)
+
+# ── Step 012  build_text_dataset ──
+# TODO: solve this step to fill in build_text_dataset
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0012)
+
+# ── Step 013  tokenize_text ──
+# TODO: solve this step to fill in tokenize_text
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0013)
+
+# ── Step 014  count_tokens ──
+# TODO: solve this step to fill in count_tokens
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0014)
+
+# ── Step 015  build_training_arguments ──
+# TODO: solve this step to fill in build_training_arguments
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0015)
+
+# ── Step 016  build_sft_trainer ──
+# TODO: solve this step to fill in build_sft_trainer
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0016)
+
+# ── Step 017  run_sft_training ──
+# TODO: solve this step to fill in run_sft_training
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0017)
+
+# ── Step 018  switch_to_inference_mode ──
+# TODO: solve this step to fill in switch_to_inference_mode
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0018)
+
+# ── Step 019  build_chat_prompt ──
+# TODO: solve this step to fill in build_chat_prompt
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0019)
+
+# ── Step 020  generate_reply ──
+# TODO: solve this step to fill in generate_reply
+#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0020)
+
+# ── Scaffold (runner) ──
+"""Scaffold: LoRA fine-tune a tiny 4-bit Qwen2.5 chat model with Unsloth."""
+import torch
+
+from solution import (
+    load_base_model_and_tokenizer,
+    count_total_parameters,
+    is_model_4bit_quantized,
+    ensure_pad_token,
+    get_lora_target_modules,
+    attach_lora_adapters,
+    count_trainable_parameters,
+    trainable_fraction,
+    build_instruction_examples,
+    format_instruction_example,
+    format_all_examples,
+    build_text_dataset,
+    tokenize_text,
+    count_tokens,
+    build_training_arguments,
+    build_sft_trainer,
+    run_sft_training,
+    switch_to_inference_mode,
+    build_chat_prompt,
+    generate_reply,
+)
+
+
+def main():
+    torch.manual_seed(0)
+
+    # 1) Load 4-bit base model + tokenizer.
+    model, tokenizer = load_base_model_and_tokenizer(
+        model_name="unsloth/Qwen2.5-0.5B-Instruct-bnb-4bit",
+        max_seq_length=256,
+    )
+    total_params = count_total_parameters(model)
+    quantized = is_model_4bit_quantized(model)
+    print(f"[base] total_params={total_params:,} 4bit={quantized}")
+
+    # 2) Make sure tokenizer has a pad token.
+    tokenizer = ensure_pad_token(tokenizer)
+    print(f"[tokenizer] pad_token={tokenizer.pad_token!r}")
+
+    # 3) Attach LoRA adapters to attention projections.
+    target_modules = get_lora_target_modules()
+    print(f"[lora] target_modules={target_modules}")
+    model = attach_lora_adapters(
+        model, r=8, lora_alpha=16, target_modules=target_modules
+    )
+    trainable = count_trainable_parameters(model)
+    frac = trainable_fraction(trainable, total_params)
+    print(f"[lora] trainable={trainable:,} fraction={frac:.6f}")
+
+    # 4) Build a tiny in-code instruction dataset.
+    examples = build_instruction_examples()
+    print(f"[data] num_examples={len(examples)}")
+    first_text = format_instruction_example(examples[0])
+    print(f"[data] formatted[0]={first_text!r}")
+    texts = format_all_examples(examples)
+    dataset = build_text_dataset(texts)
+    print(f"[data] dataset_columns={dataset.column_names} size={len(dataset)}")
+
+    # 5) Peek at tokenization of one example.
+    ids = tokenize_text(tokenizer, texts[0])
+    print(f"[data] tokens[0]={count_tokens(ids)}")
+
+    # 6) Featherweight SFT: 5 steps, batch size 1.
+    training_args = build_training_arguments(
+        output_dir="./sft_out", max_steps=5, learning_rate=2e-4
+    )
+    trainer = build_sft_trainer(
+        model, tokenizer, dataset, training_args, max_seq_length=256
+    )
+    final_loss = run_sft_training(trainer)
+    print(f"[train] final_loss={final_loss:.4f}")
+
+    # 7) Switch to fast inference and generate a reply.
+    switch_to_inference_mode(model)
+    prompt = build_chat_prompt(tokenizer, "Say hello in one short sentence.")
+    reply = generate_reply(model, tokenizer, prompt, max_new_tokens=32)
+    print(f"[gen] reply={reply!r}")
+
+    passed = (
+        total_params > 0
+        and trainable > 0
+        and trainable < total_params
+        and 0.0 < frac < 0.1
+        and isinstance(reply, str)
+        and len(reply) > 0
+        and final_loss == final_loss  # finite (not NaN)
+    )
+    print({"passed": bool(passed)})
+    print("PASS" if passed else "FAIL")
+
+
+if __name__ == "__main__":
+    main()
