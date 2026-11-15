@@ -60,13 +60,15 @@ def attach_lora_adapters(model, r=8, lora_alpha=16, target_modules=None):
     )
     return model
 
-# ── Step 007  count_trainable_parameters ──
-# TODO: solve this step to fill in count_trainable_parameters
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0007)
+def count_trainable_parameters(model):
+    """Return the number of trainable parameters in `model`."""
+    return int(sum(p.numel() for p in model.parameters() if p.requires_grad))
 
 # ── Step 008  trainable_fraction ──
-# TODO: solve this step to fill in trainable_fraction
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0008)
+def trainable_fraction(trainable_count, total_count):
+    """Return the fraction of parameters that are trainable."""
+    return float(trainable_count) / float(total_count)
+
 
 # ── Step 009  build_instruction_examples ──
 # TODO: solve this step to fill in build_instruction_examples
