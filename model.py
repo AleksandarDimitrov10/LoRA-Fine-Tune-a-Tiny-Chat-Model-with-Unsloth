@@ -38,9 +38,9 @@ def ensure_pad_token(tokenizer):
         tokenizer.pad_token = tokenizer.eos_token
     return tokenizer
 
-# ── Step 005  get_lora_target_modules ──
-# TODO: solve this step to fill in get_lora_target_modules
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0005)
+def get_lora_target_modules():
+    """Return the attention projection module name suffixes for LoRA."""
+    return ["q_proj", "k_proj", "v_proj", "o_proj"]
 
 # ── Step 006  attach_lora_adapters ──
 # TODO: solve this step to fill in attach_lora_adapters
