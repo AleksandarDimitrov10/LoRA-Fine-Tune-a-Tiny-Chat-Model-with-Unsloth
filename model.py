@@ -32,9 +32,11 @@ def is_model_4bit_quantized(model):
     """Return True if any submodule of `model` is a bitsandbytes 4-bit linear layer."""
     return any(isinstance(m, bnb.nn.Linear4bit) for m in model.modules())
 
-# ── Step 004  ensure_pad_token ──
-# TODO: solve this step to fill in ensure_pad_token
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0004)
+def ensure_pad_token(tokenizer):
+    """Guarantee tokenizer.pad_token is not None; fall back to eos_token."""
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    return tokenizer
 
 # ── Step 005  get_lora_target_modules ──
 # TODO: solve this step to fill in get_lora_target_modules
