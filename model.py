@@ -27,7 +27,6 @@ def count_total_parameters(model):
       """Return the total number of parameters in `model` as a Python int."""
       return int(sum(p.numel() for p in model.parameters))
 
-
 def is_model_4bit_quantized(model):
     """Return True if any submodule of `model` is a bitsandbytes 4-bit linear layer."""
     return any(isinstance(m, bnb.nn.Linear4bit) for m in model.modules())
@@ -42,9 +41,24 @@ def get_lora_target_modules():
     """Return the attention projection module name suffixes for LoRA."""
     return ["q_proj", "k_proj", "v_proj", "o_proj"]
 
-# ── Step 006  attach_lora_adapters ──
-# TODO: solve this step to fill in attach_lora_adapters
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0006)
+def attach_lora_adapters(model, r=8, lora_alpha=16, target_modules=None):
+    """Wrap the base model with LoRA adapters and return the PEFT model."""
+    from unsloth import FastLanguageModel
+
+    if target_modules is None:
+        target_modules = get_lora_target_modules()   # reuse step 5
+
+    model = FastLanguageModel.get_peft_model(
+        model,
+        r=r,
+        lora_alpha=lora_alpha,
+        target_modules=target_modules,
+        lora_dropout=0,                           # no dropout: fastest path in Unsloth
+        bias="none",                              # don't train bias terms
+        use_gradient_checkpointing="unsloth",     # saves GPU memory during training
+        random_state=3407,                        # reproducible adapter initialization
+    )
+    return model
 
 # ── Step 007  count_trainable_parameters ──
 # TODO: solve this step to fill in count_trainable_parameters
