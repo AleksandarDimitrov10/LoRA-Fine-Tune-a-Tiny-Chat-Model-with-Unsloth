@@ -107,10 +107,10 @@ def build_text_dataset(texts):
     """Wrap a list of training strings in a HF Dataset with a 'text' column."""
     return Dataset.from_dict({"text": list(texts)})
 
-
-# ── Step 013  tokenize_text ──
-# TODO: solve this step to fill in tokenize_text
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0013)
+def tokenize_text(tokenizer, text):
+    """Tokenize a single string and return a list[int] of input ids."""
+    encoded = tokenizer(text, add_special_tokens=True, padding=False, truncation=False)
+    return list(encoded["input_ids"])
 
 # ── Step 014  count_tokens ──
 # TODO: solve this step to fill in count_tokens
