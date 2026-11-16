@@ -6,7 +6,8 @@ from unsloth import FastLanguageModel
 import numpy as np
 import bitsandbytes as bnb
 from datasets import Dataset
-
+import torch
+from transformers import TrainingArguments
 
 # ── Step 001  load_base_model_and_tokenizer ──
 def load_base_model_and_tokenizer(model_name='unsloth/Qwen2.5-0.5B-Instruct-bnb-4bit', max_seq_length=256):
@@ -116,10 +117,24 @@ def count_tokens(input_ids):
     """Return the number of tokens in a tokenized example."""
     return int(len(input_ids))
 
+def build_training_arguments(output_dir='./sft_out', max_steps=5, learning_rate=2e-4):
+    """Return featherweight TrainingArguments for the SFT run."""
+  
+    use_bf16 = torch.cuda.is_available() and torch.cuda.is_bf16_supported()
+    use_fp16 = torch.cuda.is_available() and not use_bf16
 
-# ── Step 015  build_training_arguments ──
-# TODO: solve this step to fill in build_training_arguments
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0015)
+    return TrainingArguments(
+        output_dir=output_dir,
+        per_device_train_batch_size=1,
+        gradient_accumulation_steps=1,
+        max_steps=max_steps,
+        learning_rate=learning_rate,
+        bf16=use_bf16,
+        fp16=use_fp16,
+        logging_steps=1,
+        optim="adamw_8bit",
+        report_to="none",
+    )
 
 # ── Step 016  build_sft_trainer ──
 # TODO: solve this step to fill in build_sft_trainer
