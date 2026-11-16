@@ -136,13 +136,50 @@ def build_training_arguments(output_dir='./sft_out', max_steps=5, learning_rate=
         report_to="none",
     )
 
-# ── Step 016  build_sft_trainer ──
-# TODO: solve this step to fill in build_sft_trainer
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0016)
+def build_sft_trainer(model, tokenizer, dataset, training_args, max_seq_length=256):
+    """Construct a trl SFTTrainer over dataset['text'] ready to .train()."""
+    import inspect
+    from trl import SFTTrainer, SFTConfig
+
+    # 1) Turn the TrainingArguments from step 15 into an SFTConfig
+    #    and add the SFT-specific settings.
+    cfg = training_args.to_dict()
+    cfg["hub_token"] = training_args.hub_token   # to_dict() masks this, so copy the real value
+    cfg["dataset_text_field"] = "text"           # train on the 'text' column
+    cfg["packing"] = False                       # one example = one training row
+
+    cfg_params = inspect.signature(SFTConfig.__init__).parameters
+    if "max_seq_length" in cfg_params:           # older TRL name
+        cfg["max_seq_length"] = max_seq_length
+    else:                                        # newer TRL name
+        cfg["max_length"] = max_seq_length
+    cfg = {k: v for k, v in cfg.items() if k in cfg_params}
+    sft_config = SFTConfig(**cfg)
+
+    # 2) Build the trainer; the tokenizer argument name also depends on the version.
+    trainer_params = inspect.signature(SFTTrainer.__init__).parameters
+    tok_kw = "processing_class" if "processing_class" in trainer_params else "tokenizer"
+
+    return SFTTrainer(
+        model=model,
+        train_dataset=dataset,
+        args=sft_config,
+        **{tok_kw: tokenizer},
+    )
 
 # ── Step 017  run_sft_training ──
-# TODO: solve this step to fill in run_sft_training
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0017)
+def run_sft_training(trainer):
+    """Run a few SFT steps and return the final training loss as a float."""
+    train_output = trainer.train()
+
+    # Loss of the last logged step (logging_steps=1 means every step is logged)
+    step_losses = [log["loss"] for log in trainer.state.log_history if "loss" in log]
+    if step_losses:
+        return float(step_losses[-1])
+
+    # Fallback: the average loss over the whole run
+    return float(train_output.training_loss)
+
 
 # ── Step 018  switch_to_inference_mode ──
 # TODO: solve this step to fill in switch_to_inference_mode
