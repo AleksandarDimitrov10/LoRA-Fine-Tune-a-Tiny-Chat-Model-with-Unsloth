@@ -94,9 +94,9 @@ def build_instruction_examples():
         },
     ]
 
-# ── Step 010  format_instruction_example ──
-# TODO: solve this step to fill in format_instruction_example
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0010)
+def format_instruction_example(example):
+    """Return a single training string with role markers for instruction and response."""
+    return f"### Instruction:\n{example['instruction']}\n\n### Response:\n{example['response']}"
 
 # ── Step 011  format_all_examples ──
 # TODO: solve this step to fill in format_all_examples
