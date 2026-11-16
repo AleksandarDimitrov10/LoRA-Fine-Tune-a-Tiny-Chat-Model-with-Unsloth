@@ -112,9 +112,10 @@ def tokenize_text(tokenizer, text):
     encoded = tokenizer(text, add_special_tokens=True, padding=False, truncation=False)
     return list(encoded["input_ids"])
 
-# ── Step 014  count_tokens ──
-# TODO: solve this step to fill in count_tokens
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0014)
+def count_tokens(input_ids):
+    """Return the number of tokens in a tokenized example."""
+    return int(len(input_ids))
+
 
 # ── Step 015  build_training_arguments ──
 # TODO: solve this step to fill in build_training_arguments
