@@ -5,6 +5,7 @@ This updates live as you solve each step.
 from unsloth import FastLanguageModel
 import numpy as np
 import bitsandbytes as bnb
+from datasets import Dataset
 
 
 # ── Step 001  load_base_model_and_tokenizer ──
@@ -102,11 +103,10 @@ def format_all_examples(examples):
     """Format each instruction/response dict into a training string."""
     return [format_instruction_example(ex) for ex in examples]
 
+def build_text_dataset(texts):
+    """Wrap a list of training strings in a HF Dataset with a 'text' column."""
+    return Dataset.from_dict({"text": list(texts)})
 
-
-# ── Step 012  build_text_dataset ──
-# TODO: solve this step to fill in build_text_dataset
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0012)
 
 # ── Step 013  tokenize_text ──
 # TODO: solve this step to fill in tokenize_text
