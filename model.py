@@ -188,9 +188,14 @@ def switch_to_inference_mode(model):
     model.eval()          # make sure training mode is off (model.training == False)
     return model
 
-# ── Step 019  build_chat_prompt ──
-# TODO: solve this step to fill in build_chat_prompt
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0019)
+def build_chat_prompt(tokenizer, instruction):
+    """Return a chat-template prompt string ready for assistant generation."""
+    messages = [{"role": "user", "content": instruction}]
+    return tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,              # return a string, not token ids
+        add_generation_prompt=True,  # end with the assistant-turn opener
+    )
 
 # ── Step 020  generate_reply ──
 # TODO: solve this step to fill in generate_reply
