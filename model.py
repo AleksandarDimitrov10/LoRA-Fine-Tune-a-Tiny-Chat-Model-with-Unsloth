@@ -9,6 +9,7 @@ from datasets import Dataset
 import torch
 from transformers import TrainingArguments
 
+
 # ── Step 001  load_base_model_and_tokenizer ──
 def load_base_model_and_tokenizer(model_name='unsloth/Qwen2.5-0.5B-Instruct-bnb-4bit', max_seq_length=256):
     """Load a 4-bit quantized causal LM and its tokenizer via Unsloth.
@@ -167,7 +168,6 @@ def build_sft_trainer(model, tokenizer, dataset, training_args, max_seq_length=2
         **{tok_kw: tokenizer},
     )
 
-# ── Step 017  run_sft_training ──
 def run_sft_training(trainer):
     """Run a few SFT steps and return the final training loss as a float."""
     train_output = trainer.train()
@@ -181,9 +181,12 @@ def run_sft_training(trainer):
     return float(train_output.training_loss)
 
 
-# ── Step 018  switch_to_inference_mode ──
-# TODO: solve this step to fill in switch_to_inference_mode
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0018)
+def switch_to_inference_mode(model):
+    """Switch the LoRA-tuned model into Unsloth's fast inference mode and return it."""
+
+    FastLanguageModel.for_inference(model)
+    model.eval()          # make sure training mode is off (model.training == False)
+    return model
 
 # ── Step 019  build_chat_prompt ──
 # TODO: solve this step to fill in build_chat_prompt
