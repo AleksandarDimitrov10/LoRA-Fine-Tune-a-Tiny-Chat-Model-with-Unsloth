@@ -98,9 +98,11 @@ def format_instruction_example(example):
     """Return a single training string with role markers for instruction and response."""
     return f"### Instruction:\n{example['instruction']}\n\n### Response:\n{example['response']}"
 
-# ── Step 011  format_all_examples ──
-# TODO: solve this step to fill in format_all_examples
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0011)
+def format_all_examples(examples):
+    """Format each instruction/response dict into a training string."""
+    return [format_instruction_example(ex) for ex in examples]
+
+
 
 # ── Step 012  build_text_dataset ──
 # TODO: solve this step to fill in build_text_dataset
