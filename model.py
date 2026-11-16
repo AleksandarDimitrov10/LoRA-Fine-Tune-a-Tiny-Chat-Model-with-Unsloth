@@ -197,9 +197,26 @@ def build_chat_prompt(tokenizer, instruction):
         add_generation_prompt=True,  # end with the assistant-turn opener
     )
 
-# ── Step 020  generate_reply ──
-# TODO: solve this step to fill in generate_reply
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0020)
+def generate_reply(model, tokenizer, prompt, max_new_tokens=32):
+    """Greedy-generate a reply for `prompt` and return the decoded text."""
+    import torch
+
+    # 1) Tokenize the prompt and move it to the same device as the model (the GPU)
+    inputs = tokenizer(prompt, return_tensors="pt", add_special_tokens=False).to(model.device)
+
+    # 2) Greedy decoding: always pick the most likely next token
+    with torch.no_grad():
+        output_ids = model.generate(
+            **inputs,
+            max_new_tokens=max_new_tokens,
+            do_sample=False,
+            pad_token_id=tokenizer.pad_token_id,
+        )
+
+    # 3) Keep only the new tokens (cut off the prompt) and decode them
+    prompt_len = inputs["input_ids"].shape[1]
+    new_tokens = output_ids[0, prompt_len:]
+    return tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
 
 # ── Scaffold (runner) ──
 """Scaffold: LoRA fine-tune a tiny 4-bit Qwen2.5 chat model with Unsloth."""
