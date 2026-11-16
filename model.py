@@ -64,15 +64,35 @@ def count_trainable_parameters(model):
     """Return the number of trainable parameters in `model`."""
     return int(sum(p.numel() for p in model.parameters() if p.requires_grad))
 
-# ── Step 008  trainable_fraction ──
 def trainable_fraction(trainable_count, total_count):
     """Return the fraction of parameters that are trainable."""
     return float(trainable_count) / float(total_count)
 
 
-# ── Step 009  build_instruction_examples ──
-# TODO: solve this step to fill in build_instruction_examples
-#       (see /projects/lora-fine-tune-a-tiny-chat-model-with-unsloth/step/lora-fine-tune-a-tiny-chat-model-with-unsloth-0009)
+def build_instruction_examples():
+    """Return a small list of {'instruction', 'response'} dicts for SFT."""
+    return [
+        {
+            "instruction": "Say hello in one short sentence.",
+            "response": "Hello! Nice to meet you.",
+        },
+        {
+            "instruction": "What is the capital of France?",
+            "response": "The capital of France is Paris.",
+        },
+        {
+            "instruction": "Translate 'thank you' into German.",
+            "response": "'Thank you' in German is 'Danke'.",
+        },
+        {
+            "instruction": "Give me one tip for staying focused while studying.",
+            "response": "Put your phone in another room so it can't distract you.",
+        },
+        {
+            "instruction": "What is 7 times 8?",
+            "response": "7 times 8 is 56.",
+        },
+    ]
 
 # ── Step 010  format_instruction_example ──
 # TODO: solve this step to fill in format_instruction_example
